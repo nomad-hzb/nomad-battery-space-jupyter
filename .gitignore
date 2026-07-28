@@ -16,7 +16,7 @@ pyproject.toml
 ai_copy_instruction.txt
 notebooks/battery_batch_trial_v4 (prod).ipynb
 notebooks/bs_testserver_auth.ipynb
-notebooks/separator_sample_registration_local.ipynb
+notebooks/*_local.ipynb
 
 
 

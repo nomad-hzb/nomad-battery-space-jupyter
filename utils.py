@@ -313,3 +313,111 @@ def wait_for_sample_ids(api_client, upload_id, schema, expected_ids, sort_key='n
         time.sleep(1)
 
     return latest_entries
+
+
+def resolve_reference_to_name(api_client, reference_str):
+    """
+    Extract sample name from a NOMAD reference string.
+    
+    Input: ../uploads/{upload_id}/archive/{entry_id}#/data
+    Returns: (entry_id, name) tuple or (None, None) if not found
+    
+    Args:
+        api_client: NOMADAPIClient instance
+        reference_str: Reference string from archive
+    """
+    if not reference_str:
+        return None, None
+    
+    try:
+        # Parse reference: ../uploads/{upload_id}/archive/{entry_id}#/data
+        parts = str(reference_str).split('/archive/')
+        if len(parts) < 2:
+            return None, None
+        
+        entry_id = parts[1].split('#')[0]
+        if not entry_id:
+            return None, None
+        
+        # Query by entry_id to get the name
+        entries = api_client.iter_archive_query({'entry_id': entry_id})
+        if not entries:
+            return entry_id, None
+        
+        entry = entries[0]
+        name = entry.get('archive', {}).get('data', {}).get('name')
+        return entry_id, name
+    
+    except Exception:
+        return None, None
+
+
+def resolve_name_to_reference(api_client, sample_name, schema_m_def, upload_id=None):
+    """
+    Find a sample entry by name and return its reference string.
+    
+    Returns reference in format: ../uploads/{upload_id}/archive/{entry_id}#/data
+    Strategy: Search current upload first, then all uploads if not specified
+    
+    Args:
+        api_client: NOMADAPIClient instance
+        sample_name: Name of the sample to find
+        schema_m_def: Full m_def path (e.g., 'nomad_battery_space.schema_packages.hzb_bs_assembly_package.SeparatorSample')
+        upload_id: Optional upload_id to search in (searches all if not provided)
+    
+    Returns:
+        Reference string or None if not found
+    """
+    if not sample_name:
+        return None
+    
+    try:
+        # Try specified upload first
+        if upload_id:
+            entries = api_client.iter_archive_query({'upload_id': upload_id})
+            matching = [
+                e for e in entries
+                if (e.get('archive', {}).get('data', {}).get('m_def') == schema_m_def
+                    and e.get('archive', {}).get('data', {}).get('name') == sample_name)
+            ]
+            if matching:
+                entry_id = matching[0].get('entry_id')
+                reference = f"../uploads/{upload_id}/archive/{entry_id}#/data"
+                return reference
+        
+        # Search all uploads if not found or not specified
+        all_entries = api_client.iter_archive_query({})
+        matching = [
+            e for e in all_entries
+            if (e.get('archive', {}).get('data', {}).get('m_def') == schema_m_def
+                and e.get('archive', {}).get('data', {}).get('name') == sample_name)
+        ]
+        
+        if not matching:
+            return None
+        
+        entry_id = matching[0].get('entry_id')
+        entry_obj = matching[0]
+        
+        # Try to get upload_id from different possible locations
+        upload_id = entry_obj.get('upload_id')
+        if not upload_id:
+            metadata = entry_obj.get('metadata', {})
+            upload_id = metadata.get('upload_id')
+        if not upload_id:
+            metadata = entry_obj.get('metadata', {})
+            mainfile = metadata.get('mainfile', '')
+            if mainfile:
+                # mainfile format: uploads/{upload_id}/{path...}
+                parts = mainfile.split('/')
+                if parts[0] == 'uploads' and len(parts) > 1:
+                    upload_id = parts[1]
+        
+        if not upload_id:
+            return None
+        
+        reference = f"../uploads/{upload_id}/archive/{entry_id}#/data"
+        return reference
+    
+    except Exception:
+        return None
