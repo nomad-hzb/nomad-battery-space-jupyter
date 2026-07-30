@@ -1,44 +1,4 @@
-"""
-Shared cell definitions used across all sample registration notebooks.
-This module contains common UI components and setup code to avoid duplication.
-"""
-
-import io
-import json
-import time
-import zipfile
-import sys
-from datetime import datetime
-from pathlib import Path
-from urllib.parse import quote
-
-import numpy as np
-import pandas as pd
-
-try:
-    import requests
-    import urllib3
-    import ipywidgets as widgets
-    from ipyaggrid import Grid
-    from IPython.display import display, HTML, clear_output
-    from urllib3.exceptions import InsecureRequestWarning
-    urllib3.disable_warnings(InsecureRequestWarning)
-except ImportError as e:
-    print(f"⚠️  Import Error: {e}")
-    raise
-
-# Import API utilities from same package
-from .api_calls import (
-    NOMADAPIClient,
-    clean_text,
-    normalize_value,
-    normalize_sample_id,
-    coerce_value,
-    make_row_by_key,
-    wait_for_sample_ids,
-    resolve_name_to_reference,
-    resolve_reference_to_name,
-)
+"""Shared CSS and UI component definitions for sample registration notebooks."""
 
 # Spinner HTML for async operation feedback
 SPINNER_HTML = '''
@@ -92,27 +52,3 @@ COMMON_CSS = """
         }
     </style>
 """
-
-__all__ = [
-    'SPINNER_HTML',
-    'COMMON_CSS',
-    'display',
-    'HTML',
-    'clear_output',
-    'datetime',
-    'Path',
-    'pd',
-    'np',
-    'json',
-    'widgets',
-    'Grid',
-    'NOMADAPIClient',
-    'clean_text',
-    'normalize_value',
-    'normalize_sample_id',
-    'coerce_value',
-    'make_row_by_key',
-    'wait_for_sample_ids',
-    'resolve_name_to_reference',
-    'resolve_reference_to_name',
-]
