@@ -1,9 +1,14 @@
 """Shared utilities for NOMAD sample registration notebooks."""
 
-# Re-export UI components from shared_css
-from .shared_css import (
+# Re-export constants (UI components, column definitions)
+from .constants import (
     SPINNER_HTML,
     COMMON_CSS,
+    SHAPE_COLUMNS,
+    PRODUCT_INFO_COLUMNS,
+    DASHBOARD_WIDTH,
+    PLUGIN_PREFIX,
+    GEOMETRY_PREFIX,
 )
 
 # Re-export from api_calls (API client and utility functions)
@@ -27,9 +32,17 @@ from .help_functions import (
 )
 
 __all__ = [
+    # Constants
     'SPINNER_HTML',
     'COMMON_CSS',
+    'SHAPE_COLUMNS',
+    'PRODUCT_INFO_COLUMNS',
+    'DASHBOARD_WIDTH',
+    'PLUGIN_PREFIX',
+    'GEOMETRY_PREFIX',
+    # API client
     'NOMADAPIClient',
+    # API utilities
     'clean_text',
     'normalize_value',
     'normalize_sample_id',
@@ -38,6 +51,7 @@ __all__ = [
     'wait_for_sample_ids',
     'resolve_name_to_reference',
     'resolve_reference_to_name',
+    # Grid & validation
     'extract_grid_frame',
     'validate_row',
     'render_status',

@@ -1,4 +1,15 @@
-"""Shared CSS and UI component definitions for sample registration notebooks."""
+"""Centralized constants for sample registration notebooks.
+
+Includes:
+- UI styling (CSS, spinner HTML)
+- Column definitions for data grids
+- Schema configuration constants
+"""
+
+# ===== UI COMPONENTS =====
+
+# Dashboard layout configuration
+DASHBOARD_WIDTH = '2300px'
 
 # Spinner HTML for async operation feedback
 SPINNER_HTML = '''
@@ -52,3 +63,40 @@ COMMON_CSS = """
         }
     </style>
 """
+
+# ===== SCHEMA DEFINITIONS =====
+
+# Schema package prefixes
+PLUGIN_PREFIX = 'nomad_battery_space.schema_packages.hzb_bs_package'
+GEOMETRY_PREFIX = 'nomad_battery_space.schema_packages.utilities.geometry'
+
+
+# ===== COLUMN DEFINITIONS =====
+# Format: (database_key, display_label, data_type)
+
+# Shape-specific columns (selected based on user choice)
+SHAPE_COLUMNS = {
+    'Circle': [
+        ('diameter_mm', 'Diameter [mm]', 'float'),
+    ],
+    'Rectangle': [
+        ('length_mm', 'Length [mm]', 'float'),
+        ('width_mm', 'Width [mm]', 'float'),
+    ],
+    'Other': [
+        ('shape_description', 'Shape Description', 'str'),
+    ],
+}
+
+# Product information columns (optional, enabled by checkbox)
+PRODUCT_INFO_COLUMNS = [
+    ('product_number', 'Product Number', 'str'),
+    ('lot_number', 'Lot Number', 'str'),
+    ('product_volume', 'Product Volume [ml]', 'float'),
+    ('product_weight', 'Product Weight [g]', 'float'),
+    ('shipping_date', 'Shipping Date [YYYY-MM-DD]', 'str'),
+    ('opening_date', 'Opening Date [YYYY-MM-DD]', 'str'),
+    ('supplier', 'Supplier', 'str'),
+    ('product_description', 'Product Description', 'str'),
+    ('cost', 'Cost [EUR]', 'float'),
+]
