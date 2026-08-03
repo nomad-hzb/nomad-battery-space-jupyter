@@ -66,9 +66,10 @@ COMMON_CSS = """
 
 # ===== SCHEMA DEFINITIONS =====
 
-# Schema package prefixes
-PLUGIN_PREFIX = 'nomad_battery_space.schema_packages.hzb_bs_package'
-GEOMETRY_PREFIX = 'nomad_battery_space.schema_packages.utilities.geometry'
+# Schema package prefixes (Battery Space component schemas)
+BS_ASSEMBLY_PACKAGE = 'nomad_battery_space.schema_packages.hzb_bs_assembly_package'
+BS_COMPONENTS_PACKAGE = 'nomad_battery_space.schema_packages.hzb_bs_package'
+GEOMETRY_PACKAGE = 'nomad_battery_space.schema_packages.utilities.geometry'
 
 
 # ===== COLUMN DEFINITIONS =====

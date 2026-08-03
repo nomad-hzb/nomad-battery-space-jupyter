@@ -6,9 +6,10 @@ from .constants import (
     COMMON_CSS,
     SHAPE_COLUMNS,
     PRODUCT_INFO_COLUMNS,
+    BS_ASSEMBLY_PACKAGE,
+    BS_COMPONENTS_PACKAGE,
+    GEOMETRY_PACKAGE,
     DASHBOARD_WIDTH,
-    PLUGIN_PREFIX,
-    GEOMETRY_PREFIX,
 )
 
 # Re-export from api_calls (API client and utility functions)
@@ -32,14 +33,17 @@ from .help_functions import (
 )
 
 __all__ = [
-    # Constants
+    # UI
     'SPINNER_HTML',
     'COMMON_CSS',
+    # Schema packages
+    'BS_ASSEMBLY_PACKAGE',
+    'BS_COMPONENTS_PACKAGE',
+    'GEOMETRY_PACKAGE',
+    # Column definitions
     'SHAPE_COLUMNS',
     'PRODUCT_INFO_COLUMNS',
     'DASHBOARD_WIDTH',
-    'PLUGIN_PREFIX',
-    'GEOMETRY_PREFIX',
     # API client
     'NOMADAPIClient',
     # API utilities
