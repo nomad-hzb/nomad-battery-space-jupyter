@@ -6,6 +6,7 @@ from .constants import (
     COMMON_CSS,
     SHAPE_COLUMNS,
     PRODUCT_INFO_COLUMNS,
+    VOLUME_AND_WEIGHTS_COLUMNS,
     BS_ASSEMBLY_PACKAGE,
     BS_COMPONENTS_PACKAGE,
     GEOMETRY_PACKAGE,
@@ -43,6 +44,7 @@ __all__ = [
     # Column definitions
     'SHAPE_COLUMNS',
     'PRODUCT_INFO_COLUMNS',
+    'VOLUME_AND_WEIGHTS_COLUMNS',
     'DASHBOARD_WIDTH',
     # API client
     'NOMADAPIClient',

@@ -89,6 +89,12 @@ SHAPE_COLUMNS = {
     ],
 }
 
+# Volume and weights columns (for electrolyte samples - always visible)
+VOLUME_AND_WEIGHTS_COLUMNS = [
+    ('volume_ml', 'Volume [ml]', 'float'),
+    ('mass_g', 'Mass [g]', 'float'),
+]
+
 # Product information columns (optional, enabled by checkbox)
 PRODUCT_INFO_COLUMNS = [
     ('product_number', 'Product Number', 'str'),
